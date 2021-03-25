@@ -21,8 +21,6 @@ jobs:
 
       - name: Install dependencies 📦
         run: npm ci
-        env: 
-          CYPRESS_INSTALL_BINARY: 0 npm ci
 
       - name: Build the app 🏗
         run: npm run build
@@ -35,3 +33,14 @@ jobs:
 
       - name: Run Cypress tests 🧪
         run: npm run cy:run
+
+      - name: Upload any screenshots and videos 📼
+        uses: actions/upload-artifact@v2
+        # make sure to run this step
+        # even if the previous step fails
+        if: always()
+        with:
+          name: test-artifacts
+          path: |
+            cypress/videos
+            cypress/screenshots
